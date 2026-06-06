@@ -1,5 +1,7 @@
 ## 🤖 n8n AI Agent Workflow — Gemini + Tools
-![Workflow Screenshot](./workflow.png)
+
+![Workflow Screenshot](https://raw.githubusercontent.com/krishnasai2604/ai-agent-gemini-workflow.json/main/workflow.png)
+
 A simple but powerful n8n AI agent workflow that uses **Google Gemini** as the LLM 
 with built-in memory and three tools.
 
