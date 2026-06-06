@@ -1,0 +1,195 @@
+{
+  "name": "Ai Agent 1",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a36fb4fd-078a-4b34-9c44-9a2343702ea5",
+      "name": "When chat message received",
+      "webhookId": "2732a721-068a-47d1-b6f2-87a7222bb6ce"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a helpful assistant\nYou have the following tools to assist you with the user's question:\n1) date and time tool - use this for date and time related queries\n2)calculator - use it for mathematical questions the user might ask                                                                     3) Gemini search tool - use it to access the internet and respond to the user according"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "8bb636e1-dacc-49a1-b0c1-24159f6ea921",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        224,
+        208
+      ],
+      "id": "7fd0a15d-c8a8-40aa-94be-e600cea8b9ea",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "includeTime": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Include_Current_Time', ``, 'boolean') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dateTimeTool",
+      "typeVersion": 2,
+      "position": [
+        496,
+        208
+      ],
+      "id": "59f4c519-bd74-4edb-9687-6218a610b3f0",
+      "name": "Date & Time"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        624,
+        208
+      ],
+      "id": "41202ea6-b39f-4387-a0c3-f552e138af35",
+      "name": "Calculator"
+    },
+    {
+      "parameters": {
+        "query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Query', ``, 'string') }}",
+        "enableUrlContext": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Enable_URL_Context_Tool', ``, 'boolean') }}",
+        "enableOrganizationContext": "",
+        "options": {}
+      },
+      "type": "n8n-nodes-gemini-search.geminiSearchToolTool",
+      "typeVersion": 1,
+      "position": [
+        368,
+        208
+      ],
+      "id": "0df8c017-198c-428e-ae4f-a5b4d28007c7",
+      "name": "Gemini Search Tool",
+      "credentials": {
+        "geminiSearchApi": {
+          "id": "HvdfyqjvDkhDhgzV",
+          "name": "Gemini Credentials account Krishna Sai"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        80,
+        208
+      ],
+      "id": "5cf71342-cbf3-4715-bf7e-73e4de63c090",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "j5SE1KTnzFoJDn09",
+          "name": "Google Gemini(PaLM) Api account Krishna Sai"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Date & Time": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Search Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "4ad4c88b-ac94-41b7-8610-18b09f9e8d12",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "966c9717c649ff58138114ad4ec0792ba6c6dbbaefbc75a95d7e5ed34f041958"
+  },
+  "id": "ES2gniEgAFSlywHk",
+  "tags": []
+}
